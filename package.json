@@ -1,0 +1,35 @@
+{
+  "name": "@hypershub/cli",
+  "version": "0.1.8",
+  "description": "HypersHub local integration configurator CLI",
+  "type": "module",
+  "bin": {
+    "hy": "bin/hy.mjs"
+  },
+  "scripts": {
+    "test": "node --test",
+    "pack:check": "npm pack --dry-run --cache /tmp/hypershub-npm-cache",
+    "smoke:pack": "node scripts/smoke-pack.mjs",
+    "preflight": "npm test && npm run pack:check && npm run smoke:pack",
+    "prepublishOnly": "npm run preflight"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "keywords": [
+    "hypershub",
+    "cli",
+    "codex",
+    "claude-code",
+    "opencode"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
