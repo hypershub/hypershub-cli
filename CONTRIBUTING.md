@@ -38,5 +38,7 @@ Keep the integration-specific behavior centralized in `src/lib/url.mjs`:
 2. Update `CHANGELOG.md`.
 3. Run `npm run preflight`.
 4. Commit and tag the release.
-5. Publish with `npm publish --access public`.
+5. Create a GitHub Release for the tag, or manually run the `Publish` workflow.
 6. Verify with `npm view @hypershub/cli version`.
+
+Publishing uses npm Trusted Publisher with GitHub Actions OIDC. Do not add `NPM_TOKEN` unless you intentionally switch back to token-based publishing.

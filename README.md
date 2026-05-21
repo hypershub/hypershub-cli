@@ -252,8 +252,11 @@ Publish dry-run:
 npm publish --dry-run --access public
 ```
 
-Publish stable. `prepublishOnly` automatically runs `npm run preflight` first:
+Publish stable via GitHub Trusted Publisher:
 
-```bash
-npm publish --access public
-```
+1. Bump `package.json` version and update `CHANGELOG.md`.
+2. Commit and push to `main`.
+3. Create and push a tag, for example `v0.1.9`.
+4. Publish a GitHub Release for that tag, or run the `Publish` workflow manually.
+
+The workflow uses npm Trusted Publisher / OIDC, so it does not need an `NPM_TOKEN` secret. `prepublishOnly` still runs `npm run preflight` before publishing.
