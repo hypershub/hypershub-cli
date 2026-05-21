@@ -122,7 +122,6 @@ async function init(opts) {
 export const claudeCodeIntegration = {
   id: 'claude-code',
   defaultModel: DEFAULT_CLAUDE_MODEL,
-  defaultUrlKind: 'base',
   init,
   test: testClaudeMessages,
 }

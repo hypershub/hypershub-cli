@@ -72,7 +72,6 @@ async function init(opts) {
 export const codexIntegration = {
   id: 'codex',
   defaultModel: DEFAULT_CODEX_MODEL,
-  defaultUrlKind: 'api',
   init,
   test: testOpenAICompatible,
 }

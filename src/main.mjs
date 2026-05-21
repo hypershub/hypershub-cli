@@ -1,7 +1,7 @@
 import { parseArgv, usage } from './lib/args.mjs'
 import { state } from './lib/state.mjs'
 import { makePrompter } from './lib/prompt.mjs'
-import { DEFAULT_API_BASE_URL, DEFAULT_BASE_URL } from './lib/constants.mjs'
+import { DEFAULT_BASE_URL } from './lib/constants.mjs'
 import { normalizeApiBaseUrl, normalizeBaseUrl } from './lib/url.mjs'
 import { allIntegrations, getIntegration } from './integrations/index.mjs'
 import { doctor } from './doctor.mjs'
@@ -17,12 +17,8 @@ function resolveTargets(target) {
   return [integration]
 }
 
-function defaultUrlFor(integration) {
-  return integration.defaultUrlKind === 'base' ? DEFAULT_BASE_URL : DEFAULT_API_BASE_URL
-}
-
 async function collectOptions({ prompter, targetIntegration }) {
-  const url = await prompter.text('url', 'API Base URL', defaultUrlFor(targetIntegration))
+  const url = await prompter.text('url', 'HypersHub Base URL', DEFAULT_BASE_URL)
   const key = await prompter.text('key', 'API Key', process.env.HYPERSHUB_API_KEY || '', { secret: true })
   if (!key) throw new Error('API Key is required')
   const models = await fetchAvailableModels({ apiBaseUrl: normalizeApiBaseUrl(url), key, silent: true })
@@ -34,6 +30,13 @@ async function collectOptions({ prompter, targetIntegration }) {
     key,
     model,
   }
+}
+
+function logNormalizedUrls(targets, opts) {
+  console.log('✓ URL normalized automatically:')
+  const ids = new Set(targets.map((t) => t.id))
+  if (ids.has('codex') || ids.has('opencode')) console.log(`  Codex/OpenCode: ${opts.apiBaseUrl}`)
+  if (ids.has('claude-code')) console.log(`  Claude Code: ${opts.baseUrl}`)
 }
 
 export async function main(argv = process.argv.slice(2)) {
@@ -62,6 +65,7 @@ export async function main(argv = process.argv.slice(2)) {
   try {
     const opts = await collectOptions({ prompter, targetIntegration: targets[0] })
     if (cmd === 'init') {
+      logNormalizedUrls(targets, opts)
       state.backup = flags['no-backup'] ? false : await prompter.confirm('backup', 'Backup existing config before writing', true)
       for (const integration of targets) await integration.init(opts)
       if (await prompter.confirm('test', 'Run connectivity test now', false)) await targets[0].test(opts)

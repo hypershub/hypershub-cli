@@ -36,7 +36,6 @@ async function init(opts) {
 export const opencodeIntegration = {
   id: 'opencode',
   defaultModel: DEFAULT_CODEX_MODEL,
-  defaultUrlKind: 'api',
   init,
   test: testOpenAICompatible,
 }

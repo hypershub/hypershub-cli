@@ -29,10 +29,27 @@ hy doctor
 Non-interactive examples:
 
 ```bash
-hy init codex --url https://apiclaw.cc/v1 --key hy-xxx --model gpt-5.4 --yes
+hy init codex --url https://apiclaw.cc --key hy-xxx --model gpt-5.4 --yes
 hy init claude-code --url https://apiclaw.cc --key hy-xxx --model claude-sonnet-4-6 --yes
-hy init opencode --url https://apiclaw.cc/v1 --key hy-xxx --model gpt-5.4 --yes
+hy init opencode --url https://apiclaw.cc --key hy-xxx --model gpt-5.4 --yes
 ```
+
+
+## Base URL normalization
+
+You can enter either form when prompted or when using `--url`:
+
+```text
+https://apiclaw.cc
+https://apiclaw.cc/v1
+```
+
+The recommended input is `https://apiclaw.cc`. The CLI automatically normalizes URLs for each integration:
+
+- Codex / OpenCode / `/v1/models` / `/v1/responses`: uses `https://apiclaw.cc/v1`.
+- Claude Code / `ANTHROPIC_BASE_URL`: uses `https://apiclaw.cc`; Claude-compatible requests are sent to `/v1/messages` automatically.
+
+So users do not need to remember which tool needs `/v1`.
 
 ## Daily workflow
 

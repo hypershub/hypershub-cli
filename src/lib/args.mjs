@@ -32,7 +32,7 @@ Usage:
 
 Examples:
   hy init codex
-  hy init codex --url https://apiclaw.cc/v1 --key hy-xxx --model gpt-5.4
+  hy init codex --url https://apiclaw.cc --key hy-xxx --model gpt-5.4
   hy init claude-code --url https://apiclaw.cc --key hy-xxx
   hy test claude-code --url https://apiclaw.cc --key hy-xxx
   hy models --key hy-xxx
