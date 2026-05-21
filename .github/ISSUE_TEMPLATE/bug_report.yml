@@ -1,0 +1,37 @@
+name: Bug report
+description: Report a problem with @hypershub/cli
+labels: [bug]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: CLI version
+      placeholder: hy --version or npm list -g @hypershub/cli
+  - type: dropdown
+    id: integration
+    attributes:
+      label: Integration
+      options:
+        - codex
+        - claude-code
+        - opencode
+        - all
+        - other
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps
+      render: bash
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Remove API keys before pasting.
+      render: text

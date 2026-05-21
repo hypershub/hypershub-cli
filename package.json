@@ -28,6 +28,14 @@
     "claude-code",
     "opencode"
   ],
+  "homepage": "https://github.com/hypershub/hypershub-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hypershub/hypershub-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hypershub/hypershub-cli/issues"
+  },
   "license": "MIT",
   "publishConfig": {
     "access": "public"

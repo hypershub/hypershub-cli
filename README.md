@@ -1,6 +1,17 @@
 # HypersHub CLI
 
+[![CI](https://github.com/hypershub/hypershub-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/hypershub/hypershub-cli/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@hypershub/cli.svg)](https://www.npmjs.com/package/@hypershub/cli)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 `hy` imports HypersHub integration settings into local AI coding tools, switches default models, and verifies connectivity.
+
+
+## Repository
+
+- GitHub: <https://github.com/hypershub/hypershub-cli>
+- npm: <https://www.npmjs.com/package/@hypershub/cli>
+- Issues: <https://github.com/hypershub/hypershub-cli/issues>
 
 ## Install
 
@@ -214,11 +225,20 @@ Then restart Codex Desktop/CLI. The model catalog is written to:
 ## Development
 
 ```bash
+git clone git@github.com:hypershub/hypershub-cli.git
+cd hypershub-cli
 npm test
 npm run pack:check
 npm run smoke:pack
 npm run preflight
 ```
+
+See also:
+
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [CHANGELOG.md](CHANGELOG.md)
+- [SECURITY.md](SECURITY.md)
+
 
 Publish beta:
 
