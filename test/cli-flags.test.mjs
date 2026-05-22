@@ -13,7 +13,7 @@ function run(args) {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'hy-cli-flags-'))
   return spawnSync(process.execPath, [CLI, ...args], {
     cwd: ROOT,
-    env: { ...process.env, HOME: home, USERPROFILE: home, SHELL: '/bin/zsh' },
+    env: { ...process.env, HOME: home, USERPROFILE: home, XDG_CONFIG_HOME: path.join(home, '.config'), SHELL: '/bin/zsh' },
     encoding: 'utf8',
   })
 }

@@ -10,7 +10,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const CLI = path.join(ROOT, 'bin/hy.mjs')
 
 function run(args, home = fs.mkdtempSync(path.join(os.tmpdir(), 'hy-use-'))) {
-  const env = { ...process.env, HOME: home, USERPROFILE: home, SHELL: '/bin/zsh', HY_CLAUDE_SETTINGS: path.join(home, '.claude/settings.json') }
+  const env = { ...process.env, HOME: home, USERPROFILE: home, XDG_CONFIG_HOME: path.join(home, '.config'), SHELL: '/bin/zsh', HY_CLAUDE_SETTINGS: path.join(home, '.claude/settings.json') }
   const res = spawnSync(process.execPath, [CLI, ...args], { cwd: ROOT, env, encoding: 'utf8' })
   return { ...res, home }
 }
