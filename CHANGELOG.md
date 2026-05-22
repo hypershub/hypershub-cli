@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## 0.1.9 - 2026-05-22
+## 0.1.11 - 2026-05-22
 
 - Fix Windows path compatibility for Claude Code and OpenCode config files.
 - Add `appDataPath`, `claudeSettingsPath`, `openCodeConfigPath` path helpers.
