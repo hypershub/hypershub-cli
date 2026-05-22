@@ -1,6 +1,5 @@
-import { DEFAULT_BASE_URL } from '../lib/constants.mjs'
 import { fetchModelsStrict } from '../lib/models.mjs'
-import { normalizeApiBaseUrl } from '../lib/url.mjs'
+import { resolveCommonOptions } from '../lib/global-config.mjs'
 
 function table(models) {
   const rows = models.map((m) => ({
@@ -20,10 +19,11 @@ function table(models) {
 }
 
 export async function modelsCommand({ flags = {}, prompter } = {}) {
-  const apiBaseUrl = normalizeApiBaseUrl(flags.url || DEFAULT_BASE_URL)
-  let key = flags.key || process.env.HYPERSHUB_API_KEY || ''
+  const resolved = resolveCommonOptions(flags)
+  const apiBaseUrl = resolved.apiBaseUrl
+  let key = resolved.key || ''
   if (!key && prompter) key = await prompter.text('key', 'API Key', '', { secret: true })
-  if (!key) throw new Error('API Key is required. Pass --key hy-xxx or set HYPERSHUB_API_KEY.')
+  if (!key) throw new Error('API Key is required. Pass --key hy-xxx, set HYPERSHUB_API_KEY, or run hy config set apiKey hy-xxx.')
   const models = await fetchModelsStrict({ apiBaseUrl, key })
   if (flags.json) console.log(JSON.stringify({ apiBaseUrl, count: models.length, models }, null, 2))
   else {

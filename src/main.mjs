@@ -2,6 +2,7 @@ import { parseArgv, usage } from './lib/args.mjs'
 import { state } from './lib/state.mjs'
 import { makePrompter } from './lib/prompt.mjs'
 import { DEFAULT_BASE_URL } from './lib/constants.mjs'
+import { resolveCommonOptions, saveCommonOptions } from './lib/global-config.mjs'
 import { normalizeApiBaseUrl, normalizeBaseUrl } from './lib/url.mjs'
 import { allIntegrations, getIntegration } from './integrations/index.mjs'
 import { doctor } from './doctor.mjs'
@@ -9,6 +10,7 @@ import { fetchAvailableModels } from './lib/models.mjs'
 import { modelsCommand } from './commands/models.mjs'
 import { checkCommand } from './commands/check.mjs'
 import { useCommand } from './commands/use.mjs'
+import { configCommand } from './commands/config.mjs'
 
 function resolveTargets(target) {
   if (target === 'all') return allIntegrations()
@@ -17,15 +19,18 @@ function resolveTargets(target) {
   return [integration]
 }
 
-async function collectOptions({ prompter, targetIntegration }) {
-  const url = await prompter.text('url', 'HypersHub Base URL', DEFAULT_BASE_URL)
-  const key = await prompter.text('key', 'API Key', process.env.HYPERSHUB_API_KEY || '', { secret: true })
+async function collectOptions({ prompter, targetIntegration, flags = {} }) {
+  const resolved = resolveCommonOptions(flags)
+  const url = await prompter.text('url', 'HypersHub Base URL', resolved.baseUrl || DEFAULT_BASE_URL)
+  const key = await prompter.text('key', 'API Key', resolved.key || '', { secret: true })
   if (!key) throw new Error('API Key is required')
-  const models = await fetchAvailableModels({ apiBaseUrl: normalizeApiBaseUrl(url), key, silent: true })
+  const apiBaseUrl = normalizeApiBaseUrl(url)
+  const models = await fetchAvailableModels({ apiBaseUrl, key, silent: true })
   const modelIds = models.map((m) => m.id)
-  const model = await prompter.select('model', 'Default model', modelIds, targetIntegration.defaultModel)
+  const defaultModel = resolved.model || targetIntegration.defaultModel
+  const model = await prompter.select('model', 'Default model', modelIds, defaultModel)
   return {
-    apiBaseUrl: normalizeApiBaseUrl(url),
+    apiBaseUrl,
     baseUrl: normalizeBaseUrl(url),
     key,
     model,
@@ -41,14 +46,16 @@ function logNormalizedUrls(targets, opts) {
 
 export async function main(argv = process.argv.slice(2)) {
   const { positional, flags } = parseArgv(argv)
-  if (flags.help || positional.length === 0) return usage()
+  if (positional.length === 0) return usage()
 
   state.dryRun = Boolean(flags['dry-run'])
   state.yes = Boolean(flags.yes)
   state.backup = !flags['no-backup']
 
   const [cmd, target] = positional
+  if (flags.help && cmd !== 'config') return usage()
   if (cmd === 'doctor') return doctor()
+  if (cmd === 'config') return configCommand({ action: target || 'list', key: positional[2], value: positional[3], flags })
   if (cmd === 'check') return checkCommand({ target: target || 'all', flags })
   if (cmd === 'models') {
     const prompter = await makePrompter(flags)
@@ -63,11 +70,13 @@ export async function main(argv = process.argv.slice(2)) {
 
   const prompter = await makePrompter(flags)
   try {
-    const opts = await collectOptions({ prompter, targetIntegration: targets[0] })
+    const opts = await collectOptions({ prompter, targetIntegration: targets[0], flags })
     if (cmd === 'init') {
       logNormalizedUrls(targets, opts)
       state.backup = flags['no-backup'] ? false : await prompter.confirm('backup', 'Backup existing config before writing', true)
       for (const integration of targets) await integration.init(opts)
+      saveCommonOptions(opts)
+      console.log('✓ Global config updated for future hy commands')
       if (await prompter.confirm('test', 'Run connectivity test now', false)) await targets[0].test(opts)
     } else {
       await targets[0].test(opts)

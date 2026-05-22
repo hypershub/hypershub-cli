@@ -28,6 +28,8 @@ Requirements: Node.js 18+.
 hy init codex
 hy init claude-code
 hy init opencode
+hy config set baseUrl https://apiclaw.cc
+hy config set apiKey hy-xxx
 hy models
 hy check all
 hy check all --live
@@ -44,6 +46,49 @@ hy init codex --url https://apiclaw.cc --key hy-xxx --model gpt-5.4 --yes
 hy init claude-code --url https://apiclaw.cc --key hy-xxx --model claude-sonnet-4-6 --yes
 hy init opencode --url https://apiclaw.cc --key hy-xxx --model gpt-5.4 --yes
 ```
+
+## Global config
+
+Use `hy config` to save common settings once. This avoids entering the API key every time you run `hy models`, `hy init`, or other commands. `hy init` also writes the confirmed Base URL, API key, and selected model back to this global config, so future commands can reuse them automatically.
+
+```bash
+hy config set baseUrl https://apiclaw.cc
+hy config set apiKey hy-xxx
+hy config set defaultModel gpt-5.5
+hy config list
+hy config get apiKey
+hy config path
+hy models
+```
+
+Supported keys:
+
+- `baseUrl`: HypersHub base URL. You can use `https://apiclaw.cc` or `https://apiclaw.cc/v1`; the CLI normalizes it automatically.
+- `apiBaseUrl`: OpenAI-compatible API URL. Setting this also updates `baseUrl`.
+- `apiKey`: HypersHub API key.
+- `defaultModel`: default model used by commands when `--model` is omitted.
+
+Precedence, from highest to lowest:
+
+```text
+command flags > environment variables > hy config > interactive prompt/defaults
+```
+
+Environment variables:
+
+```bash
+HYPERSHUB_BASE_URL=https://apiclaw.cc
+HYPERSHUB_API_KEY=hy-xxx
+HYPERSHUB_DEFAULT_MODEL=gpt-5.5
+```
+
+Config file locations are cross-platform:
+
+- macOS/Linux default: `~/.hypershub/config.json`
+- Linux with `XDG_CONFIG_HOME`: `$XDG_CONFIG_HOME/hypershub/config.json`
+- Windows default: `%APPDATA%\HypersHub\config.json`
+
+Run `hy config path` to see the exact path. API keys are redacted by default in output. Use `--show-secrets` only when you explicitly need the full value. The file is written with `0600` permissions where the platform supports it.
 
 
 ## Base URL normalization
@@ -82,7 +127,8 @@ hy use claude-deepseek-v4-pro claude-code --live
 - `hy init claude-code`: updates shell profile and `~/.claude/settings.json` with `ANTHROPIC_BASE_URL`, `ANTHROPIC_AUTH_TOKEN`, default model variables, and related settings.
 - `hy init opencode`: writes `~/.config/opencode/opencode.json`.
 - `hy init all`: applies all supported integrations.
-- `hy models`: queries `/v1/models` and lists all models available to the API key. Use `--json` for scripts.
+- `hy models`: queries `/v1/models` and lists all models available to the API key. It reads `hy config` automatically. Use `--json` for scripts.
+- `hy config list|get|set|unset|path`: manages global CLI settings such as `baseUrl`, `apiKey`, and `defaultModel`.
 - `hy check [target|all]`: inspects local generated configs, redacts API keys, and reports missing URL/key/model/catalog fields.
 - `hy check [target|all] --live`: additionally calls `/v1/models` and verifies the configured default model exists for the current key.
 - `hy use <model> [target|all]`: switches the default model in existing local configs without re-entering URL/API Key. Use `--live` to verify availability first. If target is omitted, it applies to all configured integrations.
@@ -176,8 +222,9 @@ After initialization, restart PowerShell or run:
 After configuration, use these commands to find problems quickly:
 
 ```bash
-hy models --key hy-xxx
-hy models --json --key hy-xxx
+hy config set apiKey hy-xxx
+hy models
+hy models --json
 hy check codex
 hy check all --live
 hy use gpt-5.5
