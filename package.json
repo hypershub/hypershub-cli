@@ -1,6 +1,6 @@
 {
   "name": "@hypershub/cli",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "HypersHub local integration configurator CLI",
   "type": "module",
   "bin": {

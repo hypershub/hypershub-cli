@@ -13,7 +13,7 @@ function run(args, env = {}) {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'hy-cli-test-'))
   const res = spawnSync(process.execPath, [CLI, ...args], {
     cwd: ROOT,
-    env: { ...process.env, HOME: home, USERPROFILE: home, SHELL: '/bin/zsh', ...env },
+    env: { ...process.env, HOME: home, USERPROFILE: home, XDG_CONFIG_HOME: path.join(home, '.config'), SHELL: '/bin/zsh', ...env },
     encoding: 'utf8',
   })
   return { ...res, home }
@@ -37,7 +37,7 @@ test('init claude-code is idempotent', () => {
   const home = res.home
   res = spawnSync(process.execPath, [CLI, 'init', 'claude-code', '--yes', '--url', 'https://example.org', '--key', 'hy-test2', '--model', 'claude-opus-4-7', '--no-backup'], {
     cwd: ROOT,
-    env: { ...process.env, HOME: home, USERPROFILE: home, SHELL: '/bin/zsh', ...env },
+    env: { ...process.env, HOME: home, USERPROFILE: home, XDG_CONFIG_HOME: path.join(home, '.config'), SHELL: '/bin/zsh', ...env },
     encoding: 'utf8',
   })
   assert.equal(res.status, 0, res.stderr)

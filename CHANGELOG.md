@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.9 - 2026-05-22
+
+- Fix Windows path compatibility for Claude Code and OpenCode config files.
+- Add `appDataPath`, `claudeSettingsPath`, `openCodeConfigPath` path helpers.
+
 ## 0.1.8 - 2026-05-21
 
 - Normalize Base URL automatically for each integration.
