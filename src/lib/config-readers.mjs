@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import { homePath, shellConfigFile } from './paths.mjs'
+import { homePath, claudeSettingsPath, openCodeConfigPath, shellConfigFile } from './paths.mjs'
 import { readText } from './fs-safe.mjs'
 
 function exists(file) {
@@ -34,7 +34,7 @@ export function readCodexConfig() {
 }
 
 export function readOpenCodeConfig() {
-  const file = homePath('.config', 'opencode', 'opencode.json')
+  const file = openCodeConfigPath()
   try {
     const cfg = JSON.parse(readText(file))
     const provider = cfg.provider?.hypershub
@@ -54,7 +54,7 @@ export function readOpenCodeConfig() {
 
 
 function readClaudeSettings() {
-  const file = process.env.HY_CLAUDE_SETTINGS || homePath('.claude', 'settings.json')
+  const file = claudeSettingsPath()
   try {
     const settings = JSON.parse(readText(file))
     return { file, exists: exists(file), env: settings.env || {} }

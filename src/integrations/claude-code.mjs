@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import { expandHome, homePath, shellConfigFile, shellKind } from '../lib/paths.mjs'
+import { expandHome, homePath, claudeSettingsPath, shellConfigFile, shellKind } from '../lib/paths.mjs'
 import { readText, writeFileSafe } from '../lib/fs-safe.mjs'
 import { normalizeBaseUrl } from '../lib/url.mjs'
 import { DEFAULT_CLAUDE_MODEL } from '../lib/constants.mjs'
@@ -66,7 +66,7 @@ function envBlock({ baseUrl, key, model }, kind = shellKind()) {
 
 
 function claudeSettingsFile() {
-  return process.env.HY_CLAUDE_SETTINGS || homePath('.claude', 'settings.json')
+  return claudeSettingsPath()
 }
 
 function readJsonFile(file) {

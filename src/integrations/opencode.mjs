@@ -1,4 +1,4 @@
-import { homePath } from '../lib/paths.mjs'
+import { openCodeConfigPath } from '../lib/paths.mjs'
 import { writeFileSafe } from '../lib/fs-safe.mjs'
 import { normalizeApiBaseUrl } from '../lib/url.mjs'
 import { DEFAULT_CODEX_MODEL } from '../lib/constants.mjs'
@@ -27,7 +27,7 @@ function configJson({ apiBaseUrl, key, model }, models) {
 }
 
 async function init(opts) {
-  const file = homePath('.config', 'opencode', 'opencode.json')
+  const file = openCodeConfigPath()
   const models = await fetchAvailableModels(opts)
   writeFileSafe(file, configJson(opts, models))
   console.log(`✓ OpenCode configured: ${file}`)

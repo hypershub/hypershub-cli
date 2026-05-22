@@ -1,9 +1,6 @@
 name: Publish
 
 on:
-  push:
-    tags:
-      - "v*"
   release:
     types: [published]
   workflow_dispatch:
@@ -21,11 +18,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 22
           registry-url: https://registry.npmjs.org
-          package-manager-cache: false
-      - name: Show npm version
-        run: npm --version
       - name: Preflight
         run: npm run preflight
       - name: Publish to npm

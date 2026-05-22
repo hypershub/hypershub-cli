@@ -2,19 +2,6 @@
 
 All notable changes to this project will be documented in this file.
 
-## 0.1.10 - 2026-05-22
-
-- Use Node.js 24 in the publish workflow so npm Trusted Publishing has a supported npm CLI/OIDC environment.
-
-## 0.1.9 - 2026-05-22
-
-- Add `hy config` for global Base URL, API key, and default model management.
-- Make `hy models` reuse saved config so users do not need to re-enter API keys.
-- Make `hy init` write confirmed settings back to the global config for future commands.
-- Add cross-platform config paths for macOS, Linux, XDG, and Windows.
-- Redact API keys in config output by default and add config tests.
-- Allow tag pushes like `v0.1.9` to trigger GitHub Actions npm publishing.
-
 ## 0.1.8 - 2026-05-21
 
 - Normalize Base URL automatically for each integration.
