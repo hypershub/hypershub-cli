@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 ## 0.1.8 - 2026-05-21
 
 - Normalize Base URL automatically for each integration.
-- Use `https://apiclaw.cc` as the recommended input URL.
+- Use `https://hypershub.com` as the recommended input URL.
 - Keep Codex/OpenCode on OpenAI-compatible `/v1` endpoints.
 - Keep Claude Code `ANTHROPIC_BASE_URL` on the gateway root URL.
 - Document URL normalization rules.

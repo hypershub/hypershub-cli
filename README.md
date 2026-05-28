@@ -28,7 +28,7 @@ Requirements: Node.js 18+.
 hy init codex
 hy init claude-code
 hy init opencode
-hy config set baseUrl https://apiclaw.cc
+hy config set baseUrl https://hypershub.com
 hy config set apiKey hy-xxx
 hy models
 hy check all
@@ -42,9 +42,9 @@ hy doctor
 Non-interactive examples:
 
 ```bash
-hy init codex --url https://apiclaw.cc --key hy-xxx --model gpt-5.4 --yes
-hy init claude-code --url https://apiclaw.cc --key hy-xxx --model claude-sonnet-4-6 --yes
-hy init opencode --url https://apiclaw.cc --key hy-xxx --model gpt-5.4 --yes
+hy init codex --url https://hypershub.com --key hy-xxx --model gpt-5.4 --yes
+hy init claude-code --url https://hypershub.com --key hy-xxx --model claude-sonnet-4-6 --yes
+hy init opencode --url https://hypershub.com --key hy-xxx --model gpt-5.4 --yes
 ```
 
 ## Global config
@@ -52,7 +52,7 @@ hy init opencode --url https://apiclaw.cc --key hy-xxx --model gpt-5.4 --yes
 Use `hy config` to save common settings once. This avoids entering the API key every time you run `hy models`, `hy init`, or other commands. `hy init` also writes the confirmed Base URL, API key, and selected model back to this global config, so future commands can reuse them automatically.
 
 ```bash
-hy config set baseUrl https://apiclaw.cc
+hy config set baseUrl https://hypershub.com
 hy config set apiKey hy-xxx
 hy config set defaultModel gpt-5.5
 hy config list
@@ -63,7 +63,7 @@ hy models
 
 Supported keys:
 
-- `baseUrl`: HypersHub base URL. You can use `https://apiclaw.cc` or `https://apiclaw.cc/v1`; the CLI normalizes it automatically.
+- `baseUrl`: HypersHub base URL. You can use `https://hypershub.com` or `https://hypershub.com/v1`; the CLI normalizes it automatically.
 - `apiBaseUrl`: OpenAI-compatible API URL. Setting this also updates `baseUrl`.
 - `apiKey`: HypersHub API key.
 - `defaultModel`: default model used by commands when `--model` is omitted.
@@ -77,7 +77,7 @@ command flags > environment variables > hy config > interactive prompt/defaults
 Environment variables:
 
 ```bash
-HYPERSHUB_BASE_URL=https://apiclaw.cc
+HYPERSHUB_BASE_URL=https://hypershub.com
 HYPERSHUB_API_KEY=hy-xxx
 HYPERSHUB_DEFAULT_MODEL=gpt-5.5
 ```
@@ -96,14 +96,14 @@ Run `hy config path` to see the exact path. API keys are redacted by default in 
 You can enter either form when prompted or when using `--url`:
 
 ```text
-https://apiclaw.cc
-https://apiclaw.cc/v1
+https://hypershub.com
+https://hypershub.com/v1
 ```
 
-The recommended input is `https://apiclaw.cc`. The CLI automatically normalizes URLs for each integration:
+The recommended input is `https://hypershub.com`. The CLI automatically normalizes URLs for each integration:
 
-- Codex / OpenCode / `/v1/models` / `/v1/responses`: uses `https://apiclaw.cc/v1`.
-- Claude Code / `ANTHROPIC_BASE_URL`: uses `https://apiclaw.cc`; Claude-compatible requests are sent to `/v1/messages` automatically.
+- Codex / OpenCode / `/v1/models` / `/v1/responses`: uses `https://hypershub.com/v1`.
+- Claude Code / `ANTHROPIC_BASE_URL`: uses `https://hypershub.com`; Claude-compatible requests are sent to `/v1/messages` automatically.
 
 So users do not need to remember which tool needs `/v1`.
 
@@ -241,7 +241,7 @@ hy test claude-code --model claude-sonnet-4-6
 
 The CLI will continue with fallback models. Check:
 
-- URL should normally be `https://apiclaw.cc` or `https://apiclaw.cc/v1`.
+- URL should normally be `https://hypershub.com` or `https://hypershub.com/v1`.
 - API key should start with `hy-`.
 - Network/DNS can reach your HypersHub gateway.
 

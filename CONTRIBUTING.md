@@ -23,8 +23,8 @@ npm run preflight
 Users may enter either:
 
 ```text
-https://apiclaw.cc
-https://apiclaw.cc/v1
+https://hypershub.com
+https://hypershub.com/v1
 ```
 
 Keep the integration-specific behavior centralized in `src/lib/url.mjs`:

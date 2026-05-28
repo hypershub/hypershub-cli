@@ -33,11 +33,11 @@ Usage:
 
 Examples:
   hy init codex
-  hy init codex --url https://apiclaw.cc --key hy-xxx --model gpt-5.4
-  hy init claude-code --url https://apiclaw.cc --key hy-xxx
-  hy test claude-code --url https://apiclaw.cc --key hy-xxx
+  hy init codex --url https://hypershub.com --key hy-xxx --model gpt-5.4
+  hy init claude-code --url https://hypershub.com --key hy-xxx
+  hy test claude-code --url https://hypershub.com --key hy-xxx
   hy config set apiKey hy-xxx
-  hy config set baseUrl https://apiclaw.cc
+  hy config set baseUrl https://hypershub.com
   hy models
   hy check all --live
   hy use gpt-5.5

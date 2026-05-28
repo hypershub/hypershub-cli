@@ -14,7 +14,7 @@ function configUsage() {
   hy config path
 
 Keys:
-  baseUrl       HypersHub base URL, for example https://apiclaw.cc
+  baseUrl       HypersHub base URL, for example https://hypershub.com
   apiBaseUrl    OpenAI-compatible API URL; normalized with /v1
   apiKey        HypersHub API key
   defaultModel  Default model used by commands when --model is omitted
